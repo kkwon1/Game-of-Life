@@ -4,13 +4,15 @@
 #include <time.h>
 #include <chrono>
 #include <thread>
+#include <string>
+#include <unistd.h>
 
 using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono; // nanoseconds, system_clock, seconds
+using namespace std;
 
-
-const int R = 25;
-const int C = 25;
+const int R = 40;
+const int C = 200;
 int Sum;
 
 void InitArray(int[R][C],int[R][C], int, int);
@@ -25,6 +27,9 @@ int main(){
 	InitArray(grid, buffer, R, C);
 	
 	int playing = 1;
+	
+	
+	
 	while(playing){
 		PrintGrid(grid, R, C);
 		GetNewState(buffer, grid);
@@ -34,7 +39,8 @@ int main(){
 	}
 	
 	PrintGrid(grid, R, C);
-	printf("All your cells have died");
+	cout << "All your cells have died" << endl;
+	
 	
 }
 
@@ -51,21 +57,29 @@ void InitArray(int grid[R][C], int buffer[R][C], int rows, int cols){
 
 void PrintGrid(int grid[R][C], int rows, int cols){
 	int i, j;
-	sleep_for(300ms);
-	printf("\n");
-	printf("\n");
+	
+	string output = "";
+	string live = "#";
+	string dead = ".";
+	
+
+	usleep(30000);
+
 	for(i = 0; i < rows; i++){
 		for(j = 0; j < cols; j++){
 			if(grid[i][j])
-				printf(" O ");
+				cout << live;
+				//output = output + live;
 			else
-				printf(" . ");
-			if(j == cols-1)
-				printf("\n");
+				cout << dead;
+				//output = output + dead;
+			if(j == cols-1){
+				cout << endl;
+				//output = output + "\n";
+			}
 		}
 	}
-	printf("\n");
-	printf("\n");
+
 	return;
 }
 
